@@ -3,7 +3,7 @@ import 'package:shopsie/core/app_export.dart';
 import 'package:shopsie/core/utils/progress_dialog_utils.dart';
 
 class ApiClient extends GetConnect {
-  var url = "BASE_URL_OF_SERVER";
+  var url = "http://localhost:9000";
 
   @override
   void onInit() {

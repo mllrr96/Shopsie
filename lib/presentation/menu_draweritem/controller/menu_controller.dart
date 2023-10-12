@@ -1,7 +1,7 @@
 import '/core/app_export.dart';
 import 'package:shopsie/presentation/menu_draweritem/models/menu_model.dart';
 
-class MenuController extends GetxController {
+class MenuXController extends GetxController {
   Rx<MenuModel> menuModelObj = MenuModel().obs;
 
   @override

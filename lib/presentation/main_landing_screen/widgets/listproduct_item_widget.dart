@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:shopsie/core/app_export.dart';
 
 // ignore: must_be_immutable
-class ListproductItemWidget extends StatelessWidget {
-  ListproductItemWidget(this.listproductItemModelObj);
+class ListProductItemWidget extends StatelessWidget {
+  ListProductItemWidget(this.listproductItemModelObj);
 
   ListproductItemModel listproductItemModelObj;
 

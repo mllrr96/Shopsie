@@ -34,7 +34,7 @@ class GridproductnameItemWidget extends StatelessWidget {
               ),
               child: Obx(
                 () => CommonImageView(
-                  url: gridproductnameItemModelObj.imageImg.value ?? "",
+                  url: gridproductnameItemModelObj.imageImg.value,
                   height: getVerticalSize(
                     236.00,
                   ),

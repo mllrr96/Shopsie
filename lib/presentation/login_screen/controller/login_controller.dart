@@ -29,6 +29,7 @@ class LoginController extends GetxController {
   PostCustomersResp postCustomersResp = PostCustomersResp();
 
   PostCartsResp postCartsResp = PostCartsResp();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   void onReady() {
@@ -56,6 +57,7 @@ class LoginController extends GetxController {
           }
         },
         onError: (err) {
+          print(err);
           onCreateStoreAuthError(err);
           if (errCall != null) {
             errCall();

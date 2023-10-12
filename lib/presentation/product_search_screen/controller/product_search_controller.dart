@@ -90,14 +90,10 @@ class ProductSearchController extends GetxController {
       for (var element in getProductsResp!.products!) {
         var productSearchItemModel = ProductSearchItemModel();
         productSearchItemModel.productNameTxt.value = element.title!.toString();
-        productSearchItemModel.imageImg.value = element.thumbnail!.toString();
+        productSearchItemModel.imageImg.value = element.thumbnail?.toString() ?? '';
         productSearchItemModel.idTxt.value = element.id!.toString();
         productSearchItemModel.priceTxt.value = "\$ " +
-            (element.variants != null
-                ? (element.variants![0].prices != null
-                    ? element.variants![0].prices![0].amount.toString()
-                    : "2000")
-                : "0");
+            "0";
         productSearchItemModelList.add(productSearchItemModel);
       }
     }

@@ -33,6 +33,7 @@ class ProductDiscoverController extends GetxController {
         successCall();
       }
     }, onError: (err) {
+      print(err);
       onFetchProductsError(err);
       if (errCall != null) {
         errCall();
@@ -59,19 +60,14 @@ class ProductDiscoverController extends GetxController {
 
   void _onFetchProductsSuccess() {
     List<GridproductnameItemModel> gridproductnameItemModelList = [];
-    if (getProductsResp.products! != null &&
-        getProductsResp.products!.isNotEmpty) {
+    if (getProductsResp.products?.isNotEmpty ?? false) {
       for (var element in getProductsResp.products!) {
         var gridproductnameItemModel = GridproductnameItemModel();
         gridproductnameItemModel.productNameTxt.value =
             element.title!.toString();
-        gridproductnameItemModel.imageImg.value = element.thumbnail!.toString();
+        gridproductnameItemModel.imageImg.value = element.thumbnail?.toString() ?? '';
         gridproductnameItemModel.priceTxt.value = "\$ " +
-            (element.variants != null
-                ? (element.variants![0].prices != null
-                    ? element.variants![0].prices![0].amount.toString()
-                    : "2000")
-                : "0");
+            "200";
         gridproductnameItemModel.idTxt.value = element.id!.toString();
         gridproductnameItemModelList.add(gridproductnameItemModel);
       }
