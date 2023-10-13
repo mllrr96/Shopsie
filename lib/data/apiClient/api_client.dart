@@ -3,20 +3,17 @@ import 'package:shopsie/core/app_export.dart';
 import 'package:shopsie/core/utils/progress_dialog_utils.dart';
 
 class ApiClient extends GetConnect {
-  var url = "http://localhost:9000";
+  static String url = "http://localhost:9000";
 
   @override
   void onInit() {
     super.onInit();
-    httpClient.timeout = Duration(seconds: 60);
+    httpClient.timeout = Duration(seconds: 10);
 
     httpClient.addRequestModifier<dynamic>((request) async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var cookie = prefs.getString('Cookie').toString();
-      Map<String, String> headers = {
-        "Cookie": cookie,
-        "content-type": "application/json"
-      };
+      Map<String, String> headers = {"Cookie": cookie, "content-type": "application/json"};
       request.headers.addAll(headers);
       return request;
     });
@@ -25,7 +22,7 @@ class ApiClient extends GetConnect {
   ///method can be used for checking internet connection
   ///returns [bool] based on availability of internet
   Future isNetworkConnected() async {
-    if (!await Get.find<NetworkInfo>().isConnected()) {
+    if (!await NetworkInfo.instance.isConnected()) {
       throw NoInternetException('No Internet Found!');
     }
   }
@@ -45,8 +42,7 @@ class ApiClient extends GetConnect {
     ProgressDialogUtils.showProgressDialog();
     try {
       await isNetworkConnected();
-      Response response =
-          await httpClient.get('$url/store/auth/$email', headers: headers);
+      Response response = await httpClient.get('$url/store/auth/$email', headers: headers);
       ProgressDialogUtils.hideProgressDialog();
       if (_isSuccessCall(response)) {
         onSuccess!(response.body);
@@ -62,9 +58,7 @@ class ApiClient extends GetConnect {
     }
   }
 
-  Future deleteAuth(
-      {Function(dynamic data)? onSuccess,
-      Function(dynamic error)? onError}) async {
+  Future deleteAuth({Function(dynamic data)? onSuccess, Function(dynamic error)? onError}) async {
     ProgressDialogUtils.showProgressDialog();
     try {
       await isNetworkConnected();
@@ -84,9 +78,7 @@ class ApiClient extends GetConnect {
     }
   }
 
-  Future fetchAuth(
-      {Function(dynamic data)? onSuccess,
-      Function(dynamic error)? onError}) async {
+  Future fetchAuth({Function(dynamic data)? onSuccess, Function(dynamic error)? onError}) async {
     ProgressDialogUtils.showProgressDialog();
     try {
       await isNetworkConnected();
@@ -114,8 +106,7 @@ class ApiClient extends GetConnect {
     ProgressDialogUtils.showProgressDialog();
     try {
       await isNetworkConnected();
-      Response response = await httpClient.post('$url/store/customers/me',
-          headers: headers, body: requestData);
+      Response response = await httpClient.post('$url/store/customers/me', headers: headers, body: requestData);
       ProgressDialogUtils.hideProgressDialog();
       if (_isSuccessCall(response)) {
         onSuccess!(response.body);
@@ -139,8 +130,7 @@ class ApiClient extends GetConnect {
     ProgressDialogUtils.showProgressDialog();
     try {
       await isNetworkConnected();
-      Response response = await httpClient
-          .post('$url/store/carts/$cartId/payment-sessions', body: requestData);
+      Response response = await httpClient.post('$url/store/carts/$cartId/payment-sessions', body: requestData);
       ProgressDialogUtils.hideProgressDialog();
       if (_isSuccessCall(response)) {
         onSuccess!(response.body);
@@ -165,9 +155,7 @@ class ApiClient extends GetConnect {
     ProgressDialogUtils.showProgressDialog();
     try {
       await isNetworkConnected();
-      Response response = await httpClient.post(
-          '$url/store/carts/$cartId/line-items/$lineItems',
-          body: requestData);
+      Response response = await httpClient.post('$url/store/carts/$cartId/line-items/$lineItems', body: requestData);
       ProgressDialogUtils.hideProgressDialog();
       if (_isSuccessCall(response)) {
         onSuccess!(response.body);
@@ -191,8 +179,7 @@ class ApiClient extends GetConnect {
     ProgressDialogUtils.showProgressDialog();
     try {
       await isNetworkConnected();
-      Response response = await httpClient
-          .post('$url/store/carts/$cartId/complete', body: requestData);
+      Response response = await httpClient.post('$url/store/carts/$cartId/complete', body: requestData);
       ProgressDialogUtils.hideProgressDialog();
       if (_isSuccessCall(response)) {
         onSuccess!(response.body);
@@ -209,14 +196,11 @@ class ApiClient extends GetConnect {
   }
 
   Future deleteAddressId(
-      {Function(dynamic data)? onSuccess,
-      Function(dynamic error)? onError,
-      String? addressId = ''}) async {
+      {Function(dynamic data)? onSuccess, Function(dynamic error)? onError, String? addressId = ''}) async {
     ProgressDialogUtils.showProgressDialog();
     try {
       await isNetworkConnected();
-      Response response = await httpClient
-          .delete('$url/store/customers/me/addresses/$addressId');
+      Response response = await httpClient.delete('$url/store/customers/me/addresses/$addressId');
       ProgressDialogUtils.hideProgressDialog();
       if (_isSuccessCall(response)) {
         onSuccess!(response.body);
@@ -233,14 +217,11 @@ class ApiClient extends GetConnect {
   }
 
   Future fetchCustomerId(
-      {Function(dynamic data)? onSuccess,
-      Function(dynamic error)? onError,
-      String? customerId = ''}) async {
+      {Function(dynamic data)? onSuccess, Function(dynamic error)? onError, String? customerId = ''}) async {
     ProgressDialogUtils.showProgressDialog();
     try {
       await isNetworkConnected();
-      Response response =
-          await httpClient.get('$url/store/customer-cart/$customerId');
+      Response response = await httpClient.get('$url/store/customer-cart/$customerId');
       ProgressDialogUtils.hideProgressDialog();
       if (_isSuccessCall(response)) {
         onSuccess!(response.body);
@@ -257,14 +238,11 @@ class ApiClient extends GetConnect {
   }
 
   Future createAddresses(
-      {Function(dynamic data)? onSuccess,
-      Function(dynamic error)? onError,
-      Map requestData = const {}}) async {
+      {Function(dynamic data)? onSuccess, Function(dynamic error)? onError, Map requestData = const {}}) async {
     ProgressDialogUtils.showProgressDialog();
     try {
       await isNetworkConnected();
-      Response response = await httpClient
-          .post('$url/store/customers/me/addresses', body: requestData);
+      Response response = await httpClient.post('$url/store/customers/me/addresses', body: requestData);
       ProgressDialogUtils.hideProgressDialog();
       if (_isSuccessCall(response)) {
         onSuccess!(response.body);
@@ -288,8 +266,7 @@ class ApiClient extends GetConnect {
     ProgressDialogUtils.showProgressDialog();
     try {
       await isNetworkConnected();
-      Response response =
-          await httpClient.get('$url/store/carts/$cartId', headers: headers);
+      Response response = await httpClient.get('$url/store/carts/$cartId', headers: headers);
       ProgressDialogUtils.hideProgressDialog();
       if (_isSuccessCall(response)) {
         onSuccess!(response.body);
@@ -313,8 +290,7 @@ class ApiClient extends GetConnect {
     ProgressDialogUtils.showProgressDialog();
     try {
       await isNetworkConnected();
-      Response response = await httpClient
-          .delete('$url/store/carts/$cartId/line-items/$lineItems');
+      Response response = await httpClient.delete('$url/store/carts/$cartId/line-items/$lineItems');
       ProgressDialogUtils.hideProgressDialog();
       if (_isSuccessCall(response)) {
         onSuccess!(response.body);
@@ -331,14 +307,11 @@ class ApiClient extends GetConnect {
   }
 
   Future createCarts(
-      {Function(dynamic data)? onSuccess,
-      Function(dynamic error)? onError,
-      Map requestData = const {}}) async {
+      {Function(dynamic data)? onSuccess, Function(dynamic error)? onError, Map requestData = const {}}) async {
     ProgressDialogUtils.showProgressDialog();
     try {
       await isNetworkConnected();
-      Response response =
-          await httpClient.post('$url/store/carts', body: requestData);
+      Response response = await httpClient.post('$url/store/carts', body: requestData);
       ProgressDialogUtils.hideProgressDialog();
       if (_isSuccessCall(response)) {
         onSuccess!(response.body);
@@ -363,10 +336,8 @@ class ApiClient extends GetConnect {
     ProgressDialogUtils.showProgressDialog();
     try {
       await isNetworkConnected();
-      Response response = await httpClient.post(
-          '$url/store/carts/$cartId/line-items',
-          headers: headers,
-          body: requestData);
+      Response response =
+          await httpClient.post('$url/store/carts/$cartId/line-items', headers: headers, body: requestData);
       ProgressDialogUtils.hideProgressDialog();
       if (_isSuccessCall(response)) {
         onSuccess!(response.body);
@@ -383,14 +354,11 @@ class ApiClient extends GetConnect {
   }
 
   Future createStoreAuth(
-      {Function(dynamic data)? onSuccess,
-      Function(dynamic error)? onError,
-      Map requestData = const {}}) async {
+      {Function(dynamic data)? onSuccess, Function(dynamic error)? onError, Map requestData = const {}}) async {
     ProgressDialogUtils.showProgressDialog();
     try {
       await isNetworkConnected();
-      Response response =
-          await httpClient.post('$url/store/auth', body: requestData);
+      Response response = await httpClient.post('$url/store/auth', body: requestData);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       // prefs.setString('Cookie', response.headers!['set-cookie'].toString());
       prefs.setString('Cookie', response.headers?['set-cookie'] ?? '');
@@ -417,8 +385,7 @@ class ApiClient extends GetConnect {
     ProgressDialogUtils.showProgressDialog();
     try {
       await isNetworkConnected();
-      Response response = await httpClient.post('$url/store/customers',
-          headers: headers, body: requestData);
+      Response response = await httpClient.post('$url/store/customers', headers: headers, body: requestData);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('Cookie', response.headers!['set-cookie'].toString());
       ProgressDialogUtils.hideProgressDialog();
@@ -444,8 +411,7 @@ class ApiClient extends GetConnect {
     ProgressDialogUtils.showProgressDialog();
     try {
       await isNetworkConnected();
-      Response response =
-          await httpClient.get('$url/store/products/$id', headers: headers);
+      Response response = await httpClient.get('$url/store/products/$id', headers: headers);
       ProgressDialogUtils.hideProgressDialog();
       if (_isSuccessCall(response)) {
         onSuccess!(response.body);
@@ -468,8 +434,7 @@ class ApiClient extends GetConnect {
     ProgressDialogUtils.showProgressDialog();
     try {
       await isNetworkConnected();
-      Response response =
-          await httpClient.get('$url/store/products', headers: headers);
+      Response response = await httpClient.get('$url/store/products', headers: headers);
       ProgressDialogUtils.hideProgressDialog();
       if (_isSuccessCall(response)) {
         onSuccess!(response.body);

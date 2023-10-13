@@ -10,10 +10,12 @@ class PasswordTextField extends StatefulWidget {
     required this.controller,
     this.onChanged,
     this.validator,
+    this.hintText,
   }) : super(key: key);
   final TextEditingController controller;
   final void Function(String)? onChanged;
   final String? Function(String?)? validator;
+  final String? hintText;
   @override
   State<PasswordTextField> createState() => _PasswordTextFieldState();
 }
@@ -40,9 +42,10 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
           filled: true,
           fillColor: ColorConstant.gray50,
           border: border,
-          hintText: "msg_enter_your_pass".tr,
+          hintText: widget.hintText ?? "msg_enter_your_pass".tr,
           enabledBorder: border,
           contentPadding: EdgeInsets.zero,
+          helperText: '',
           prefixIcon: IntrinsicHeight(
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -76,6 +79,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
   Widget iconButton() {
     if (GetPlatform.isIOS) {
       return CupertinoButton(
+          padding: EdgeInsets.zero,
           child: Icon(
             obscureText ? Icons.visibility : Icons.visibility_off,
           ),
@@ -86,6 +90,8 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
           });
     }
     return IconButton(
+      padding: EdgeInsets.zero,
+      splashRadius: 10,
       onPressed: () {
         setState(() {
           obscureText = !obscureText;
@@ -106,12 +112,16 @@ class EmailTextField extends StatelessWidget {
     this.onSubmitted,
     this.textInputAction = TextInputAction.next,
     this.validator,
+    this.hintText,
+    this.iconData = Icons.mail,
   });
   final TextEditingController controller;
   final void Function(String)? onChanged;
   final void Function(String)? onSubmitted;
   final TextInputAction textInputAction;
   final String? Function(String?)? validator;
+  final String? hintText;
+  final IconData? iconData;
   @override
   Widget build(BuildContext context) {
     Color lightWhite = Get.isDarkMode ? Colors.white54 : Colors.black54;
@@ -126,24 +136,28 @@ class EmailTextField extends StatelessWidget {
       style: mediumTextStyle,
       validator: validator,
       decoration: InputDecoration(
-          filled: true,
-          fillColor: ColorConstant.gray50,
-          border: border,
-          enabledBorder: border,
-          hintText: "msg_enter_your_emai".tr,
-          contentPadding: EdgeInsets.zero,
-          prefixIcon: IntrinsicHeight(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const SizedBox(width: 16.0),
-                Icon(Icons.mail, color: lightWhite),
-                const SizedBox(width: 12.0),
-                const VerticalDivider(indent: 10, endIndent: 10),
-                const SizedBox(width: 12.0),
-              ],
-            ),
-          )),
+        filled: true,
+        fillColor: ColorConstant.gray50,
+        border: border,
+        enabledBorder: border,
+        hintText: hintText ?? "msg_enter_your_emai".tr,
+        contentPadding:iconData == null ?  EdgeInsets.symmetric(horizontal: 12.0): EdgeInsets.zero,
+        helperText: '',
+        prefixIcon: iconData != null
+            ? IntrinsicHeight(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const SizedBox(width: 16.0),
+                    Icon(iconData ?? Icons.mail, color: lightWhite),
+                    const SizedBox(width: 12.0),
+                    const VerticalDivider(indent: 10, endIndent: 10),
+                    const SizedBox(width: 12.0),
+                  ],
+                ),
+              )
+            : null,
+      ),
     );
   }
 }

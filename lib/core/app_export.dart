@@ -10,7 +10,6 @@ export 'package:shopsie/theme/app_style.dart';
 export 'package:shopsie/theme/app_decoration.dart';
 export 'package:connectivity_plus/connectivity_plus.dart';
 export 'package:shopsie/routes/app_routes.dart';
-export 'package:shopsie/data/models/selectionPopupModel/selection_popup_model.dart';
 export 'package:shopsie/widgets/common_image_view.dart';
 export 'package:shopsie/core/errors/exceptions.dart';
 export 'package:shopsie/core/network/network_info.dart';

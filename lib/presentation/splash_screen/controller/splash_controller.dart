@@ -1,19 +1,23 @@
+import 'package:shopsie/main.dart';
 import '/core/app_export.dart';
-import 'package:shopsie/presentation/splash_screen/models/splash_model.dart';
 
 class SplashController extends GetxController {
-  Rx<SplashModel> splashModelObj = SplashModel().obs;
-
   @override
-  void onReady() {
+  Future<void> onReady() async {
     super.onReady();
-    Future.delayed(const Duration(milliseconds: 5000), () {
+    final customerId = prefs.getString('customer_id');
+    // Check if there's no a customer id saved then head to login screen
+    if (customerId == null) {
+      Get.offNamed(AppRoutes.loginScreen);
+      return;
+    }
+
+    // If customer id exist then try to authenticate the user
+    final authResult = await medusa.auth.getSession();
+    authResult.when((success) {
+      Get.offAllNamed(AppRoutes.mainLandingScreen);
+    }, (error) {
       Get.offNamed(AppRoutes.loginScreen);
     });
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
   }
 }

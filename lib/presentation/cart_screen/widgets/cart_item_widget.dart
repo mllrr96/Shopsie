@@ -1,14 +1,12 @@
 import '../controller/cart_controller.dart';
-import '../models/cart_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:shopsie/core/app_export.dart';
 
 // ignore: must_be_immutable
 class CartItemWidget extends StatelessWidget {
-  CartItemWidget(this.cartItemModelObj,
+  CartItemWidget(
       {this.onTapImgTrash, this.onTapImgMinus, this.onTapImgPlus});
 
-  CartItemModel cartItemModelObj;
 
   var controller = Get.find<CartController>();
 
@@ -34,7 +32,7 @@ class CartItemWidget extends StatelessWidget {
           children: [
             Obx(
               () => CommonImageView(
-                url: cartItemModelObj.productImg.value,
+                url:'',
                 height: getVerticalSize(
                   110.00,
                 ),
@@ -75,7 +73,7 @@ class CartItemWidget extends StatelessWidget {
                             ),
                             child: Obx(
                               () => Text(
-                                cartItemModelObj.priceTxt.value,
+                                '200',
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.left,
                                 style: AppStyle.txtLatoRegular18.copyWith(
@@ -116,7 +114,7 @@ class CartItemWidget extends StatelessWidget {
                     ),
                     child: Obx(
                       () => Text(
-                        cartItemModelObj.cartProductTxt.value,
+                        'product',
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
                         style: AppStyle.txtLatoRegular14Gray900.copyWith(),
@@ -197,7 +195,7 @@ class CartItemWidget extends StatelessWidget {
                           ),
                           child: Obx(
                             () => Text(
-                              cartItemModelObj.qtyTxt.value,
+                              '2',
                               overflow: TextOverflow.ellipsis,
                               textAlign: TextAlign.left,
                               style:

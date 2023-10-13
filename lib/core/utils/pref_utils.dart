@@ -1,79 +1,69 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shopsie/main.dart';
 
-// ignore_for_file: must_be_immutable
 class PrefUtils {
-  PrefUtils() {
-    SharedPreferences.getInstance().then((value) {
-      _sharedPreferences = value;
-    });
+
+static SharedPreferences _sharedPreferences = prefs;
+
+ static void clearPreferencesData() async {
+    _sharedPreferences.clear();
   }
 
-  static SharedPreferences? _sharedPreferences;
-
-  Future<void> init() async {
-    _sharedPreferences ??= await SharedPreferences.getInstance();
-    print('SharedPreference Initialized');
+ static Future<void> setCustomerId(String value) {
+    return _sharedPreferences.setString('customer_id', value);
   }
 
-  void clearPreferencesData() async {
-    _sharedPreferences!.clear();
-  }
-
-  Future<void> setCustomerId(String value) {
-    return _sharedPreferences!.setString('customer_id', value);
-  }
-
-  String getCustomerId() {
+static  String getCustomerId() {
     try {
-      return _sharedPreferences!.getString('customer_id') ?? '';
+      return _sharedPreferences.getString('customer_id') ?? '';
     } catch (e) {
       return '';
     }
   }
 
-  Future<void> setEmail(String value) {
-    return _sharedPreferences!.setString('email', value);
+static Future<void> setEmail(String value) {
+    return _sharedPreferences.setString('email', value);
   }
 
-  String getEmail() {
+static  String getEmail() {
     try {
-      return _sharedPreferences!.getString('email') ?? '';
+      return _sharedPreferences.getString('email') ?? '';
     } catch (e) {
       return '';
     }
   }
 
-  Future<void> setFirstName(String value) {
-    return _sharedPreferences!.setString('first_name', value);
+static Future<void> setFirstName(String value) {
+    return _sharedPreferences.setString('first_name', value);
   }
 
-  String getFirstName() {
+static String getFirstName() {
     try {
-      return _sharedPreferences!.getString('first_name') ?? '';
+      return _sharedPreferences.getString('first_name') ?? '';
     } catch (e) {
       return '';
     }
   }
 
-  Future<void> setLastName(String value) {
-    return _sharedPreferences!.setString('last_name', value);
+static Future<void> setLastName(String value) {
+    return _sharedPreferences.setString('last_name', value);
   }
 
-  String getLastName() {
+static  String getLastName() {
     try {
-      return _sharedPreferences!.getString('last_name') ?? '';
+      return _sharedPreferences.getString('last_name') ?? '';
     } catch (e) {
       return '';
     }
   }
 
-  Future<void> setCartId(String value) {
-    return _sharedPreferences!.setString('cart_id', value);
+static Future<void> setCartId(String value) {
+    return _sharedPreferences.setString('cart_id', value);
   }
 
-  String getCartId() {
+static String getCartId() {
     try {
-      return _sharedPreferences!.getString('cart_id') ?? '';
+      return _sharedPreferences.getString('cart_id') ?? '';
     } catch (e) {
       return '';
     }

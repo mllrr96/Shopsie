@@ -35,6 +35,8 @@ class BottomNavigationBarButton extends StatelessWidget {
     );
     const EdgeInsets kBackgroundButtonPadding = EdgeInsets.symmetric(vertical: 14.0, horizontal: 64.0);
     const double kContainerHeight = 50.0;
+    final bottomPadding = context.mediaQueryPadding.bottom;
+    final defaultBackgroundColor = context.theme.bottomNavigationBarTheme.backgroundColor;
     // final BoxShadow boxShadow = BoxShadow(
     //   color: Colors.grey.withOpacity(0.5),
     //   spreadRadius: 3,
@@ -45,12 +47,10 @@ class BottomNavigationBarButton extends StatelessWidget {
       return Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-              color: backgroundColor ?? Theme.of(context).bottomNavigationBarTheme.backgroundColor,
-              height: MediaQuery.of(context).padding.bottom / 2),
+          Container(color: backgroundColor ?? defaultBackgroundColor, height: bottomPadding / 2),
           Container(
             decoration: BoxDecoration(
-              color: backgroundColor ?? Theme.of(context).bottomNavigationBarTheme.backgroundColor,
+              color: backgroundColor ?? defaultBackgroundColor,
               // boxShadow: noShadow ? null : [boxShadow],
             ),
             height: containerHeight ?? kContainerHeight,
@@ -69,21 +69,17 @@ class BottomNavigationBarButton extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-              color: backgroundColor ?? Theme.of(context).bottomNavigationBarTheme.backgroundColor,
-              height: MediaQuery.of(context).padding.bottom),
+          Container(color: backgroundColor ?? defaultBackgroundColor, height: bottomPadding),
         ],
       );
     }
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-            color: backgroundColor ?? Theme.of(context).bottomNavigationBarTheme.backgroundColor,
-            height: MediaQuery.of(context).padding.bottom / 2),
+        Container(color: backgroundColor ?? defaultBackgroundColor, height: bottomPadding / 2),
         Container(
           decoration: BoxDecoration(
-            color: backgroundColor ?? Theme.of(context).bottomNavigationBarTheme.backgroundColor,
+            color: backgroundColor ?? defaultBackgroundColor,
             // boxShadow:noShadow ? null : [boxShadow],
           ),
           height: containerHeight ?? kContainerHeight,
@@ -100,9 +96,7 @@ class BottomNavigationBarButton extends StatelessWidget {
             ),
           ),
         ),
-        Container(
-            color: backgroundColor ?? Theme.of(context).bottomNavigationBarTheme.backgroundColor,
-            height: MediaQuery.of(context).padding.bottom),
+        Container(color: backgroundColor ?? defaultBackgroundColor, height: bottomPadding),
       ],
     );
   }

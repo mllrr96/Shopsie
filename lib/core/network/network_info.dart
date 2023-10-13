@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:get/get.dart';
 
 // For checking internet connectivity
 abstract class NetworkInfoI {
@@ -10,6 +11,8 @@ abstract class NetworkInfoI {
 }
 
 class NetworkInfo implements NetworkInfoI {
+  static NetworkInfo get instance => Get.find<NetworkInfo>();
+
   Connectivity connectivity;
 
   NetworkInfo(this.connectivity) {

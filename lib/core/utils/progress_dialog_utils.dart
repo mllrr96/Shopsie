@@ -1,30 +1,20 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+
+import 'color_constant.dart';
 
 class ProgressDialogUtils {
-  static bool isProgressVisible = false;
-
   ///common method for showing progress dialog
-  static void showProgressDialog({isCancellable = false}) async {
-    if (!isProgressVisible) {
-      Get.dialog(
-        Center(
-          child: CircularProgressIndicator.adaptive(
-            strokeWidth: 4,
-            valueColor: AlwaysStoppedAnimation<Color>(
-              Colors.white,
-            ),
-          ),
-        ),
-        barrierDismissible: isCancellable,
-      );
-      isProgressVisible = true;
-    }
+  static void showProgressDialog({isCancellable = false, String? status}) async {
+    if (EasyLoading.isShow) return;
+    EasyLoading.show(
+        status: status,
+        maskType: isCancellable ? null : EasyLoadingMaskType.black,
+        indicator: LoadingAnimationWidget.beat(color: ColorConstant.indigoA200, size: 50));
   }
 
   ///common method for hiding progress dialog
   static void hideProgressDialog() {
-    if (isProgressVisible) Get.back();
-    isProgressVisible = false;
+    EasyLoading.dismiss();
   }
 }

@@ -1,18 +1,15 @@
 import 'controller/profile_profile_info_controller.dart';
-import 'models/profile_profile_info_model.dart';
 import 'package:flutter/material.dart';
 import 'package:shopsie/core/app_export.dart';
 import 'package:shopsie/core/utils/validation_functions.dart';
 import 'package:shopsie/widgets/custom_button.dart';
 import 'package:shopsie/widgets/custom_text_form_field.dart';
-import 'package:shopsie/data/models/me/post_me_req.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 // ignore_for_file: must_be_immutable
 class ProfileProfileInfoPage extends StatelessWidget {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   ProfileProfileInfoController controller =
-  Get.put(ProfileProfileInfoController(ProfileProfileInfoModel().obs));
+  Get.put(ProfileProfileInfoController());
 
   @override
   Widget build(BuildContext context) {
@@ -97,33 +94,16 @@ class ProfileProfileInfoPage extends StatelessWidget {
   }
 
   void onTapBtnSaveedits() {
-    PostMeReq postMeReq = PostMeReq(
-      email: controller.emailOneController.text,
-      firstName: controller.firstNameOneController.text,
-      lastName: controller.lastNameOneController.text,
-    );
-    controller.callCreateMe(
-      postMeReq.toJson(),
-      successCall: _onCreateMeSuccess,
-      errCall: _onCreateMeError,
-    );
+    // PostMeReq postMeReq = PostMeReq(
+    //   email: controller.emailOneController.text,
+    //   firstName: controller.firstNameOneController.text,
+    //   lastName: controller.lastNameOneController.text,
+    // );
+    // controller.callCreateMe(
+    //   postMeReq.toJson(),
+    //   successCall: _onCreateMeSuccess,
+    //   errCall: _onCreateMeError,
+    // );
   }
 
-  void _onCreateMeSuccess() {
-    controller.profileProfileInfoModelObj.value.emailTxt.value =
-        controller.postMeResp.customer!.email!.toString();
-    controller.profileProfileInfoModelObj.value.firstNameTxt.value =
-        controller.postMeResp.customer!.firstName!.toString();
-    controller.profileProfileInfoModelObj.value.lastNameTxt.value =
-        controller.postMeResp.customer!.lastName!.toString();
-    Fluttertoast.showToast(
-      msg: "Information changed successfully!",
-    );
-  }
-
-  void _onCreateMeError() {
-    Fluttertoast.showToast(
-      msg: "Something went wrong!",
-    );
-  }
 }

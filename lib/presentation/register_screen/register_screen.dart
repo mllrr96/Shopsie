@@ -1,238 +1,156 @@
-import 'package:shopsie/data/models/storeAuth/post_store_auth_req.dart';
-
-import '../../data/models/socialAuth/soicalAuth.dart';
+import 'package:shopsie/main.dart';
+import 'package:shopsie/widgets/sign_in_text_fields.dart';
+import 'package:sign_in_button/sign_in_button.dart';
 import 'controller/register_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:shopsie/core/app_export.dart';
-import 'package:shopsie/core/utils/validation_functions.dart';
-import 'package:shopsie/widgets/custom_button.dart';
-import 'package:shopsie/widgets/custom_text_form_field.dart';
-import 'package:shopsie/data/models/customers/post_customers_req.dart';
-import 'package:shopsie/data/models/carts/post_carts_req.dart';
-import 'package:shopsie/core/constants/shopsie.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-// ignore_for_file: must_be_immutable
 class RegisterScreen extends GetWidget<RegisterController> {
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorConstant.whiteA700,
-      appBar: AppBar(backgroundColor: Colors.transparent,elevation: 0,
-
-      ),
-      body: Container(
-        width: size.width,
-        child: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            child: Container(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Padding(
-                      padding: getPadding(left: 15, top: 101, right: 15),
+    const halfSpace = SizedBox(height: 6.0);
+    final bottomPadding = context.mediaQueryPadding.bottom;
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        backgroundColor: ColorConstant.whiteA700,
+        bottomNavigationBar: bottomNavWidget(bottomPadding),
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Form(
+              key: controller.formKey,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 40.0),
                       child: Text("msg_hello_register".tr,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
-                          style: AppStyle.txtLatoBold24.copyWith(letterSpacing: 0.72, height: 1.00))),
-                  CustomTextFormField(
-                      width: 358,
-                      focusNode: FocusNode(),
-                      controller: controller.firstNameController,
+                          style: AppStyle.txtLatoBold24.copyWith(letterSpacing: 0.72, height: 1.00)),
+                    ),
+                    halfSpace,
+                    EmailTextField(
+                      controller: controller.emailController1,
                       hintText: "lbl_first_name".tr,
-                      margin: getMargin(left: 15, top: 42, right: 15),
-                      alignment: Alignment.center,
+                      iconData: null,
                       validator: (value) {
-                        if (!isText(value)) {
-                          return "Please enter valid first name";
+                        if (value == null || value.isEmpty) {
+                          return 'First name is required';
                         }
                         return null;
-                      }),
-                  CustomTextFormField(
-                      width: 358,
-                      focusNode: FocusNode(),
-                      controller: controller.lastNameController,
+                      },
+                    ),
+                    halfSpace,
+                    EmailTextField(
+                      controller: controller.emailController1,
                       hintText: "lbl_last_name".tr,
-                      margin: getMargin(left: 15, top: 12, right: 15),
-                      alignment: Alignment.center,
+                      iconData: null,
                       validator: (value) {
-                        if (!isText(value)) {
-                          return "Please enter valid last name";
+                        if (value == null || value.isEmpty) {
+                          return 'Last name is required';
                         }
                         return null;
-                      }),
-                  CustomTextFormField(
-                      width: 358,
-                      focusNode: FocusNode(),
+                      },
+                    ),
+                    halfSpace,
+                    EmailTextField(
                       controller: controller.emailController1,
                       hintText: "lbl_email".tr,
-                      margin: getMargin(left: 15, top: 12, right: 15),
-                      alignment: Alignment.center,
                       validator: (value) {
-                        if (!isValidEmail(value)) {
-                          return "Please enter valid email";
+                        if (value == null || value.isEmpty) {
+                          return 'Email is required';
+                        }
+                        if (!value.isEmail) {
+                          return 'Invalid email format';
                         }
                         return null;
-                      }),
-                  CustomTextFormField(
-                    width: 358,
-                    focusNode: FocusNode(),
-                    controller: controller.passwordController1,
-                    hintText: "lbl_password".tr,
-                    margin: getMargin(left: 15, top: 12, right: 15),
-                    textInputAction: TextInputAction.done,
-                    alignment: Alignment.center,
-                    isObscureText: true,
-                    validator: (value) {
-                      if (value == null || (!isValidPassword(value, isRequired: true))) {
-                        return "Please enter valid password";
-                      }
-                      return null;
-                    },
-                  ),
-                  CustomButton(
-                      width: 358,
-                      text: "lbl_register".tr,
-                      margin: getMargin(left: 15, top: 24, right: 15),
-                      fontStyle: ButtonFontStyle.LatoMedium16,
-                      onTap: onTapBtnRegister,
-                      alignment: Alignment.center),
-                  Align(
-                      alignment: Alignment.center,
-                      child: Container(
-                          margin: getMargin(left: 15, top: 38, right: 15),
-                          child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Padding(
-                                    padding: getPadding(top: 5),
-                                    child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Container(
-                                              height: getVerticalSize(1.00),
-                                              width: getHorizontalSize(112.00),
-                                              margin: getMargin(top: 4, bottom: 10),
-                                              decoration: BoxDecoration(color: ColorConstant.indigo50)),
-                                          Text("lbl_or_signup_with".tr,
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                              style: AppStyle.txtLatoRegular14Gray602.copyWith()),
-                                          Container(
-                                              height: getVerticalSize(1.00),
-                                              width: getHorizontalSize(111.00),
-                                              margin: getMargin(top: 4, bottom: 10),
-                                              decoration: BoxDecoration(color: ColorConstant.indigo50))
-                                        ])),
-                                Padding(
-                                    padding: getPadding(top: 18),
-                                    child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          InkWell(
-                                              onTap: () {
-                                                // onTapStackfacebook();
-                                              },
-                                              child: Container(
-                                                  height: getVerticalSize(56.00),
-                                                  width: getHorizontalSize(168.00),
-                                                  child: Card(
-                                                      clipBehavior: Clip.antiAlias,
-                                                      elevation: 0,
-                                                      margin: EdgeInsets.all(0),
-                                                      color: ColorConstant.whiteA700,
-                                                      shape: RoundedRectangleBorder(
-                                                          side: BorderSide(
-                                                              color: ColorConstant.gray200,
-                                                              width: getHorizontalSize(1.00)),
-                                                          borderRadius: BorderRadius.circular(getHorizontalSize(8.00))),
-                                                      child: Stack(children: [
-                                                        Align(
-                                                            alignment: Alignment.center,
-                                                            child: Padding(
-                                                                padding: getPadding(
-                                                                    left: 40, top: 16, right: 40, bottom: 16),
-                                                                child: CommonImageView(
-                                                                    svgPath: ImageConstant.imgFacebook24X12,
-                                                                    height: getVerticalSize(24.00),
-                                                                    width: getHorizontalSize(12.00))))
-                                                      ])))),
-                                          InkWell(
-                                              onTap: () {
-                                                // onTapStackgoogle();
-                                              },
-                                              child: Container(
-                                                  height: getVerticalSize(56.00),
-                                                  width: getHorizontalSize(168.00),
-                                                  child: Card(
-                                                      clipBehavior: Clip.antiAlias,
-                                                      elevation: 0,
-                                                      margin: EdgeInsets.all(0),
-                                                      color: ColorConstant.whiteA700,
-                                                      shape: RoundedRectangleBorder(
-                                                          side: BorderSide(
-                                                              color: ColorConstant.gray200,
-                                                              width: getHorizontalSize(1.00)),
-                                                          borderRadius: BorderRadius.circular(getHorizontalSize(8.00))),
-                                                      child: Stack(children: [
-                                                        Align(
-                                                            alignment: Alignment.center,
-                                                            child: Padding(
-                                                                padding: getPadding(
-                                                                    left: 40, top: 16, right: 40, bottom: 16),
-                                                                child: CommonImageView(
-                                                                    svgPath: ImageConstant.imgGoogle,
-                                                                    height: getSize(23.00),
-                                                                    width: getSize(23.00))))
-                                                      ]))))
-                                        ]))
-                              ]))),
-                  Align(
-                      alignment: Alignment.center,
-                      child: InkWell(
-                          onTap: () {
-                            onTapTxtAlreadyhavean();
-                          },
-                          child: Container(
-                              margin: getMargin(left: 15, top: 45, right: 15, bottom: 20),
-                              child: RichText(
-                                  text: TextSpan(children: [
-                                    TextSpan(
-                                        text: "msg_already_have_an2".tr,
-                                        style: TextStyle(
-                                            color: ColorConstant.gray900,
-                                            fontSize: getFontSize(14),
-                                            fontFamily: 'Lato',
-                                            fontWeight: FontWeight.w400)),
-                                    TextSpan(
-                                        text: ' ',
-                                        style: TextStyle(
-                                            color: ColorConstant.gray902,
-                                            fontSize: getFontSize(14),
-                                            fontFamily: 'Lato',
-                                            fontWeight: FontWeight.w400)),
-                                    TextSpan(
-                                        text: "lbl_login_now".tr,
-                                        style: TextStyle(
-                                            color: ColorConstant.indigoA200,
-                                            fontSize: getFontSize(14),
-                                            fontFamily: 'Montserrat',
-                                            fontWeight: FontWeight.w600))
-                                  ]),
-                                  textAlign: TextAlign.left))))
-                ],
+                      },
+                    ),
+                    halfSpace,
+                    PasswordTextField(
+                      controller: controller.passwordController1,
+                      hintText: "lbl_password".tr,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Password is required';
+                        }
+                        if (value.length < 8) {
+                          return 'Password should be at least 8 characters long';
+                        }
+                        return null;
+                      },
+                    ),
+                    halfSpace,
+                    ElevatedButton(
+                      child: Text(
+                        "lbl_register".tr,
+                        style: TextStyle(
+                          color: ColorConstant.whiteA700,
+                          fontSize: getFontSize(16),
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                          fixedSize: Size(Get.width, 40), backgroundColor: ColorConstant.indigoA200),
+                      onPressed: onTapBtnRegister,
+                    ),
+                    halfSpace,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 40.0),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Expanded(
+                              child: Container(height: 2, decoration: BoxDecoration(color: ColorConstant.indigo50)),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                              child: Text("lbl_or_signup_with".tr,
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.left,
+                                  style: AppStyle.txtLatoRegular14Gray602.copyWith()),
+                            ),
+                            Expanded(
+                              child: Container(height: 2, decoration: BoxDecoration(color: ColorConstant.indigo50)),
+                            )
+                          ]),
+                    ),
+                    halfSpace,
+                    Column(
+                      children: [
+                        SizedBox(
+                          width: double.maxFinite,
+                          child: SignInButton(
+                            Buttons.facebook,
+                            onPressed: () {},
+                            text: 'Sign up with Facebook',
+                          ),
+                        ),
+                        SizedBox(
+                          width: double.maxFinite,
+                          child: SignInButton(
+                            Buttons.google,
+                            onPressed: () {},
+                            text: 'Sign up with Google',
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -241,63 +159,57 @@ class RegisterScreen extends GetWidget<RegisterController> {
     );
   }
 
-  void onTapBtnRegister() {
-    if (_formKey.currentState!.validate()) {
-      PostCustomersReq postCustomersReq = PostCustomersReq(
-        email: controller.emailController1.text,
-        firstName: controller.firstNameController.text,
-        lastName: controller.lastNameController.text,
-        password: controller.passwordController1.text,
-      );
-      controller.callFetchEmail(
-          successCall: () {
-            if (!controller.getEmailResp.exists) {
-              controller.callCreateCustomers(
-                postCustomersReq.toJson(),
-                successCall: _onCreateCustomersSuccess,
-                errCall: _onCreateCustomersError,
-              );
-            } else {
-              Fluttertoast.showToast(
-                msg: "Email already registered!",
-              );
-            }
-          },
-          errCall: _onEmailError,
-          email: postCustomersReq.email);
-    }
-  }
-
-  void _onCreateCustomersSuccess() {
-    Get.find<PrefUtils>().setCustomerId(controller.postCustomersResp.customer!.id!.toString());
-    Get.find<PrefUtils>().setEmail(controller.postCustomersResp.customer!.email!.toString());
-    Get.find<PrefUtils>().setFirstName(controller.postCustomersResp.customer!.firstName!.toString());
-    Get.find<PrefUtils>().setLastName(controller.postCustomersResp.customer!.lastName!.toString());
-    PostCartsReq postCartsReq = PostCartsReq(
-      regionId: Shopsie.region,
-    );
-    controller.callCreateCarts(
-      postCartsReq.toJson(),
-      successCall: _onCreateCartsSuccess,
-      errCall: _onCreateCartsError,
+  Widget bottomNavWidget(double bottomPadding) {
+    final textStyle = TextStyle(
+        color: ColorConstant.gray900, fontSize: getFontSize(14), fontFamily: 'Lato', fontWeight: FontWeight.w400);
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        InkWell(
+            onTap: () => Get.offNamed(AppRoutes.loginScreen),
+            child: Container(
+                padding: EdgeInsets.all(8.0),
+                child: RichText(
+                    text: TextSpan(children: [
+                      TextSpan(text: "msg_already_have_an2".tr, style: textStyle),
+                      TextSpan(text: ' ', style: textStyle),
+                      TextSpan(
+                          text: "lbl_login_now".tr,
+                          style: textStyle.copyWith(color: ColorConstant.indigoA200, fontWeight: FontWeight.w600))
+                    ]),
+                    textAlign: TextAlign.left))),
+        SizedBox(height: bottomPadding),
+      ],
     );
   }
 
-  void _onCreateCartsSuccess() {
-    Get.find<PrefUtils>().setCartId(controller.postCartsResp.cart!.id!.toString());
-    Get.offNamed(AppRoutes.mainLandingScreen);
-  }
+  Future<void> onTapBtnRegister() async {
+    if (!controller.formKey.currentState!.validate()) return;
+    // PostCustomersReq postCustomersReq = PostCustomersReq(
+    //   email: controller.emailController1.text,
+    //   firstName: controller.firstNameController.text,
+    //   lastName: controller.lastNameController.text,
+    //   password: controller.passwordController1.text,
+    // );
 
-  void _onCreateCartsError() {
-    Fluttertoast.showToast(
-      msg: "Something went wrong!",
-    );
-  }
+    await medusa.auth.authenticate();
 
-  void _onCreateCustomersError() {
-    Fluttertoast.showToast(
-      msg: "Something went wrong!",
-    );
+    // controller.callFetchEmail(
+    //     successCall: () {
+    //       if (!controller.getEmailResp.exists) {
+    //         controller.callCreateCustomers(
+    //           postCustomersReq.toJson(),
+    //           successCall: _onCreateCustomersSuccess,
+    //           errCall: _onCreateCustomersError,
+    //         );
+    //       } else {
+    //         Fluttertoast.showToast(
+    //           msg: "Email already registered!",
+    //         );
+    //       }
+    //     },
+    //     errCall: _onEmailError,
+    //     email: postCustomersReq.email);
   }
 
   onTapTxtAlreadyhavean() {
@@ -316,64 +228,4 @@ class RegisterScreen extends GetWidget<RegisterController> {
     );
   }
 
-  _onEmailSuccess(SocialAuth authData) {
-    if (controller.getEmailResp.exists) {
-      PostStoreAuthReq postStoreAuthReq = PostStoreAuthReq(
-        email: authData.email,
-        password: Shopsie.pwd,
-      );
-      controller.callCreateStoreAuth(
-        postStoreAuthReq.toJson(),
-        successCall: _onCreateStoreAuthSuccess,
-        errCall: _onCreateStoreAuthError,
-      );
-    } else {
-      PostCustomersReq postCustomersReq = PostCustomersReq(
-        email: authData.email,
-        firstName: authData.firstName,
-        lastName: authData.lastName,
-        password: Shopsie.pwd,
-      );
-      controller.callCreateCustomers(
-        postCustomersReq.toJson(),
-        successCall: _onCreateCustomersSuccess,
-        errCall: _onCreateCustomersError,
-      );
-    }
-  }
-
-  _onEmailError() {
-    Fluttertoast.showToast(
-      msg: "Something went wrong!",
-    );
-  }
-
-  void _onCreateStoreAuthSuccess() {
-    Get.find<PrefUtils>().setCustomerId(controller.postStoreAuthResp.customer!.id!.toString());
-    Get.find<PrefUtils>().setFirstName(controller.postStoreAuthResp.customer!.firstName!.toString());
-    Get.find<PrefUtils>().setEmail(controller.postStoreAuthResp.customer!.email!.toString());
-    Get.find<PrefUtils>().setLastName(controller.postStoreAuthResp.customer!.lastName!.toString());
-    controller.callFetchCustomerId(
-      successCall: _onFetchCustomerIdSuccess,
-      errCall: _onFetchCustomerIdError,
-      customerId: Get.find<PrefUtils>().getCustomerId(),
-    );
-  }
-
-  void _onCreateStoreAuthError() {
-    Fluttertoast.showToast(
-      msg: "Something went wrong!",
-    );
-  }
-
-  void _onFetchCustomerIdSuccess() {
-    Get.find<PrefUtils>().setCartId(controller.getCustomerIdResp.cart!.id!.toString());
-    Get.offNamed(AppRoutes.mainLandingScreen);
-  }
-
-  void _onFetchCustomerIdError() {
-    Fluttertoast.showToast(
-      msg: "Something went wrong!",
-    );
-  }
 }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shopsie/core/app_export.dart';
+import 'package:shopsie/main.dart';
+import 'package:sign_in_button/sign_in_button.dart';
 
 class MenuDrawer extends StatelessWidget {
   MenuDrawer(this.controller);
@@ -9,6 +12,7 @@ class MenuDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textStyle = AppStyle.txtLatoRegular18.copyWith(letterSpacing: 1.08);
     return Drawer(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -22,36 +26,24 @@ class MenuDrawer extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     ListTile(
-                      title: Center(
-                        child: Text("lbl_cart".tr.toUpperCase(),
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.left,
-                            style: AppStyle.txtLatoRegular18.copyWith(letterSpacing: 1.08)),
-                      ),
+                      title: Text("lbl_cart".tr.toUpperCase(),
+                          overflow: TextOverflow.ellipsis, textAlign: TextAlign.center, style: textStyle),
                       onTap: () {
                         Get.back();
                         Get.toNamed(AppRoutes.cartScreen);
                       },
                     ),
                     ListTile(
-                      title: Center(
-                        child: Text("lbl_profile".tr.toUpperCase(),
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.left,
-                            style: AppStyle.txtLatoRegular18.copyWith(letterSpacing: 1.08)),
-                      ),
+                      title: Text("lbl_profile".tr.toUpperCase(),
+                          overflow: TextOverflow.ellipsis, textAlign: TextAlign.center, style: textStyle),
                       onTap: () {
                         Get.back();
                         Get.toNamed(AppRoutes.profileTabScreen);
                       },
                     ),
                     ListTile(
-                      title: Center(
-                        child: Text("lbl_clothing".tr.toUpperCase(),
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.left,
-                            style: AppStyle.txtLatoRegular18.copyWith(letterSpacing: 1.08)),
-                      ),
+                      title: Text("lbl_clothing".tr.toUpperCase(),
+                          overflow: TextOverflow.ellipsis, textAlign: TextAlign.center, style: textStyle),
                       onTap: () {
                         Get.back();
                         Get.toNamed(AppRoutes.productDiscoverScreen);
@@ -62,35 +54,58 @@ class MenuDrawer extends StatelessWidget {
           ),
           Column(
             children: [
+              ListTile(
+                title: Text(
+                  "lbl_logout2".tr.toUpperCase(),
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  style: textStyle.copyWith(color: Colors.redAccent),
+                ),
+                onTap: () async {
+                  final result = await medusa.auth.deleteSession();
+                  if (result) {
+                    PrefUtils.clearPreferencesData();
+                    Get.offAllNamed(AppRoutes.loginScreen);
+                  } else {
+                    Fluttertoast.showToast(msg: 'Error singing out');
+                  }
+                },
+              ),
+              Divider(),
               Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    InkWell(
-                        onTap: () {},
-                        child: Padding(
-                            padding: getPadding(bottom: 1),
-                            child: CommonImageView(
-                                svgPath: ImageConstant.imgEye, height: getSize(26.00), width: getSize(26.00)))),
-                    InkWell(
-                        onTap: () {},
-                        child: Padding(
-                            padding: getPadding(left: 24, bottom: 1),
-                            child: CommonImageView(
-                                svgPath: ImageConstant.imgFacebook, height: getSize(26.00), width: getSize(26.00)))),
-                    InkWell(
-                        onTap: () {},
-                        child: Padding(
-                            padding: getPadding(left: 24, top: 1),
-                            child: CommonImageView(
-                                svgPath: ImageConstant.imgSettings, height: getSize(26.00), width: getSize(26.00)))),
-                    InkWell(
-                        onTap: () {},
-                        child: Padding(
-                            padding: getPadding(left: 24, bottom: 1),
-                            child: CommonImageView(
-                                svgPath: ImageConstant.imgVector, height: getSize(26.00), width: getSize(26.00))))
+                    SignInButtonBuilder(
+                      backgroundColor: Colors.deepOrange,
+                      onPressed: () {},
+                      text: '',
+                      mini: true,
+                      shape: StadiumBorder(),
+                      image: SvgPicture.asset(ImageConstant.imgEye),
+                    ),
+                    SignInButton(
+                      Buttons.facebook,
+                      onPressed: () {},
+                      mini: true,
+                      elevation: 0,
+                      shape: StadiumBorder(),
+                    ),
+                    SignInButton(
+                      Buttons.pinterest,
+                      onPressed: () {},
+                      mini: true,
+                      elevation: 0,
+                      shape: StadiumBorder(),
+                    ),
+                    SignInButton(
+                      Buttons.twitter,
+                      onPressed: () {},
+                      mini: true,
+                      elevation: 0,
+                      shape: StadiumBorder(),
+                    ),
                   ]),
               SizedBox(height: context.mediaQueryPadding.bottom + 12.0),
             ],

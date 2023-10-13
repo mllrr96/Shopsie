@@ -11,231 +11,163 @@ import 'package:shopsie/core/app_export.dart';
 import 'package:shopsie/widgets/custom_button.dart';
 
 class MainLandingScreen extends GetWidget<MainLandingController> {
-
   @override
   Widget build(BuildContext context) {
+    final trending = [
+      "lbl_all".tr,
+      "lbl_dresses".tr,
+      "lbl_jewellery".tr,
+      "lbl_shoes2".tr,
+      "lbl_accessories".tr,
+    ];
+
     return Scaffold(
         drawer: MenuDrawer(
           MenuController(),
         ),
         appBar: AppBar(
           elevation: 0,
-          // leading: IconButton(
-          //     onPressed: () {
-          //       onTapImgMenu();
-          //     },
-          //     icon: Icon(
-          //       Icons.menu,
-          //       color: Colors.black,
-          //     )),
           title: SvgPicture.asset(ImageConstant.imgSignal),
           actions: [
-            IconButton(onPressed: onTapImgSearch, icon: SvgPicture.asset(ImageConstant.imgSearch)),
-            IconButton(onPressed: onTapImgCart, icon: SvgPicture.asset(ImageConstant.imgCart)),
-            IconButton(onPressed: onTapImgUser, icon: SvgPicture.asset(ImageConstant.imgUser)),
+            IconButton(onPressed: onTapImgSearch, splashRadius: 25, icon: SvgPicture.asset(ImageConstant.imgSearch)),
+            IconButton(onPressed: onTapImgCart, splashRadius: 25, icon: SvgPicture.asset(ImageConstant.imgCart)),
+            IconButton(onPressed: onTapImgUser, splashRadius: 25, icon: SvgPicture.asset(ImageConstant.imgUser)),
           ],
         ),
         body: SafeArea(
           child: ListView(children: [
-            Align(
-                child: Container(
-                    width: double.infinity,
-                    decoration: AppDecoration.fillGray200,
-                    child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Container(
-                              height: getVerticalSize(318.00),
-                              width: getHorizontalSize(278.00),
-                              margin: getMargin(left: 51, top: 58, right: 51),
-                              child: Stack(alignment: Alignment.bottomCenter, children: [
-                                Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: InkWell(
-                                        onTap: () {
-                                          onTapImgImageMain();
-                                        },
-                                        child: ClipRRect(
-                                            borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(getHorizontalSize(200.00)),
-                                                topRight: Radius.circular(getHorizontalSize(200.00))),
-                                            child: CommonImageView(
-                                                imagePath: ImageConstant.imgImagemain,
-                                                height: getVerticalSize(318.00),
-                                                width: getHorizontalSize(278.00))))),
-                                Align(
-                                    alignment: Alignment.bottomCenter,
-                                    child: Container(
-                                        margin: getMargin(left: 6, top: 27, right: 3, bottom: 27),
-                                        child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            children: [
-                                              Align(
-                                                  alignment: Alignment.centerLeft,
-                                                  child: Text("lbl_season_sale".tr.toUpperCase(),
-                                                      overflow: TextOverflow.ellipsis,
-                                                      textAlign: TextAlign.left,
-                                                      style: AppStyle.txtPlayfairDisplayRomanRegular48.copyWith())),
-                                              Align(
-                                                  alignment: Alignment.centerRight,
-                                                  child: Container(
-                                                      margin: getMargin(left: 34, top: 15, right: 34),
-                                                      child: RichText(
-                                                          text: TextSpan(children: [
-                                                            TextSpan(
-                                                                text: "lbl_up_to".tr.toUpperCase(),
-                                                                style: TextStyle(
-                                                                    color: ColorConstant.whiteA7007f,
-                                                                    fontSize: getFontSize(24),
-                                                                    fontFamily: 'Lato',
-                                                                    fontWeight: FontWeight.w500)),
-                                                            TextSpan(
-                                                                text: ' ',
-                                                                style: TextStyle(
-                                                                    color: ColorConstant.gray900,
-                                                                    fontSize: getFontSize(24),
-                                                                    fontFamily: 'Lato',
-                                                                    fontWeight: FontWeight.w500)),
-                                                            TextSpan(
-                                                                text: "lbl_60_off".tr.toUpperCase(),
-                                                                style: TextStyle(
-                                                                    color: ColorConstant.gray200,
-                                                                    fontSize: getFontSize(24),
-                                                                    fontFamily: 'Lato',
-                                                                    fontWeight: FontWeight.w500))
-                                                          ]),
-                                                          textAlign: TextAlign.left)))
-                                            ])))
-                              ])),
-                          Container(
-                              height: getVerticalSize(48.00),
-                              width: getHorizontalSize(134.00),
-                              margin: getMargin(left: 51, top: 42, right: 51),
-                              child: Stack(alignment: Alignment.bottomCenter, children: [
-                                Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: InkWell(
-                                        onTap: () {
-                                          onTapShopNowBtn();
-                                        },
-                                        child: Container(
-                                            height: getVerticalSize(48.00),
-                                            width: getHorizontalSize(134.00),
-                                            decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(getHorizontalSize(67.00)),
-                                                border: Border.all(
-                                                    color: ColorConstant.gray900, width: getHorizontalSize(0.50)))))),
-                                Align(
-                                    alignment: Alignment.bottomCenter,
-                                    child: Padding(
-                                        padding: getPadding(left: 23, top: 11, right: 23, bottom: 11),
-                                        child: Text("lbl_shop_now".tr,
-                                            overflow: TextOverflow.ellipsis,
-                                            textAlign: TextAlign.left,
-                                            style: AppStyle.txtPlayfairDisplayRomanRegular20.copyWith())))
-                              ])),
-                          Align(
-                              alignment: Alignment.centerLeft,
-                              child: Padding(
-                                  padding: getPadding(top: 48),
-                                  child: CommonImageView(
-                                      imagePath: ImageConstant.imgImagetwo,
-                                      height: getVerticalSize(123.00),
-                                      width: getHorizontalSize(390.00))))
-                        ]))),
-            Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                    margin: getMargin(left: 10, top: 68),
-                    child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Align(
-                              alignment: Alignment.centerLeft,
-                              child: Padding(
-                                  padding: getPadding(left: 99, right: 99),
-                                  child: Text("lbl_trending_now".tr.toUpperCase(),
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.left,
-                                      style: AppStyle.txtLatoRegular18.copyWith(letterSpacing: 1.08)))),
-                          Align(
-                              alignment: Alignment.centerLeft,
-                              child: Padding(
-                                  padding: getPadding(top: 36),
-                                  child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Container(
-                                            padding: getPadding(left: 16, top: 9, right: 16, bottom: 9),
-                                            decoration: AppDecoration.txtFillIndigoA200
-                                                .copyWith(borderRadius: BorderRadiusStyle.txtRoundedBorder8),
-                                            child: Text("lbl_all".tr,
-                                                overflow: TextOverflow.ellipsis,
-                                                textAlign: TextAlign.left,
-                                                style:
-                                                    AppStyle.txtLatoRegular13WhiteA700.copyWith(letterSpacing: 0.39))),
-                                        Container(
-                                            padding: getPadding(left: 16, top: 9, right: 16, bottom: 9),
-                                            decoration: AppDecoration.txtFillGray200
-                                                .copyWith(borderRadius: BorderRadiusStyle.txtRoundedBorder8),
-                                            child: Text("lbl_dresses".tr,
-                                                overflow: TextOverflow.ellipsis,
-                                                textAlign: TextAlign.left,
-                                                style: AppStyle.txtLatoRegular13.copyWith(letterSpacing: 0.39))),
-                                        Container(
-                                            padding: getPadding(left: 5, top: 11, right: 4, bottom: 6),
-                                            decoration: AppDecoration.txtFillGray200
-                                                .copyWith(borderRadius: BorderRadiusStyle.txtRoundedBorder8),
-                                            child: Text("lbl_jewellery".tr,
-                                                overflow: TextOverflow.ellipsis,
-                                                textAlign: TextAlign.left,
-                                                style: AppStyle.txtLatoRegular13.copyWith(letterSpacing: 0.39))),
-                                        Container(
-                                            padding: getPadding(left: 16, top: 9, right: 16, bottom: 9),
-                                            decoration: AppDecoration.txtFillGray200
-                                                .copyWith(borderRadius: BorderRadiusStyle.txtRoundedBorder8),
-                                            child: Text("lbl_shoes2".tr,
-                                                overflow: TextOverflow.ellipsis,
-                                                textAlign: TextAlign.left,
-                                                style: AppStyle.txtLatoRegular13.copyWith(letterSpacing: 0.39))),
-                                        Container(
-                                            padding: getPadding(top: 9, bottom: 9),
-                                            decoration: AppDecoration.txtFillGray200
-                                                .copyWith(borderRadius: BorderRadiusStyle.txtRoundedBorder8),
-                                            child: Text("lbl_accessories".tr,
-                                                overflow: TextOverflow.ellipsis,
-                                                textAlign: TextAlign.center,
-                                                style: AppStyle.txtLatoRegular13.copyWith(letterSpacing: 0.39)))
-                                      ]))),
-                          Align(
-                              alignment: Alignment.centerLeft,
-                              child: Container(
-                                  height: getVerticalSize(325.00),
-                                  width: getHorizontalSize(358.00),
-                                  child: Obx(() => ListView.builder(
-                                      padding: getPadding(top: 32, right: 10),
-                                      scrollDirection: Axis.horizontal,
-                                      physics: BouncingScrollPhysics(),
-                                      itemCount: controller.mainLandingModelObj.value.listproductItemList.length,
-                                      itemBuilder: (context, index) {
-                                        ListproductItemModel model =
-                                            controller.mainLandingModelObj.value.listproductItemList[index];
-                                        return ListProductItemWidget(model);
-                                      }))))
-                        ]))),
-            Padding(
-                padding: getPadding(left: 16, top: 87, right: 16),
-                child: Text("msg_actual_categori".tr.toUpperCase(),
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.left,
-                    style: AppStyle.txtLatoRegular18.copyWith(letterSpacing: 1.08))),
+            Container(
+              decoration: AppDecoration.fillGray200,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                      height: getVerticalSize(318.00),
+                      width: getHorizontalSize(278.00),
+                      margin: getMargin(left: 51, top: 58, right: 51),
+                      child: Stack(alignment: Alignment.bottomCenter, children: [
+                        Align(
+                            alignment: Alignment.centerLeft,
+                            child: InkWell(
+                                onTap: () {
+                                  onTapImgImageMain();
+                                },
+                                child: ClipRRect(
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(getHorizontalSize(200.00)),
+                                        topRight: Radius.circular(getHorizontalSize(200.00))),
+                                    child: CommonImageView(
+                                        imagePath: ImageConstant.imgImagemain,
+                                        height: getVerticalSize(318.00),
+                                        width: getHorizontalSize(278.00))))),
+                        Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Container(
+                                margin: getMargin(left: 6, top: 27, right: 3, bottom: 27),
+                                child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text("lbl_season_sale".tr.toUpperCase(),
+                                              overflow: TextOverflow.ellipsis,
+                                              textAlign: TextAlign.left,
+                                              style: AppStyle.txtPlayfairDisplayRomanRegular48.copyWith())),
+                                      Align(
+                                          alignment: Alignment.centerRight,
+                                          child: Container(
+                                              margin: getMargin(left: 34, top: 15, right: 34),
+                                              child: RichText(
+                                                  text: TextSpan(children: [
+                                                    TextSpan(
+                                                        text: "lbl_up_to".tr.toUpperCase(),
+                                                        style: TextStyle(
+                                                            color: ColorConstant.whiteA7007f,
+                                                            fontSize: getFontSize(24),
+                                                            fontFamily: 'Lato',
+                                                            fontWeight: FontWeight.w500)),
+                                                    TextSpan(
+                                                        text: ' ',
+                                                        style: TextStyle(
+                                                            color: ColorConstant.gray900,
+                                                            fontSize: getFontSize(24),
+                                                            fontFamily: 'Lato',
+                                                            fontWeight: FontWeight.w500)),
+                                                    TextSpan(
+                                                        text: "lbl_60_off".tr.toUpperCase(),
+                                                        style: TextStyle(
+                                                            color: ColorConstant.gray200,
+                                                            fontSize: getFontSize(24),
+                                                            fontFamily: 'Lato',
+                                                            fontWeight: FontWeight.w500))
+                                                  ]),
+                                                  textAlign: TextAlign.left)))
+                                    ])))
+                      ])),
+                  SizedBox(height: 48),
+                  OutlinedButton(
+                    onPressed: () => Get.toNamed(AppRoutes.productDiscoverScreen),
+                    child: Text(
+                      'Shop now',
+                      style: TextStyle(color: ColorConstant.indigoA200, fontSize: 24),
+                    ),
+                    style: OutlinedButton.styleFrom(
+                        padding: EdgeInsets.symmetric(horizontal: 22.0, vertical: 10.0), shape: StadiumBorder()),
+                  ),
+                  SizedBox(height: 48),
+                  CommonImageView(
+                    imagePath: ImageConstant.imgImagetwo,
+                  ),
+                ],
+              ),
+            ),
+            Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(height: 36),
+                  Text("lbl_trending_now".tr.toUpperCase(),
+                      textAlign: TextAlign.center, style: AppStyle.txtLatoRegular18.copyWith(letterSpacing: 1.08)),
+                  SizedBox(height: 36),
+                  Container(
+                    width: Get.width,
+                    height: 40,
+                    child: ListView.separated(
+                        separatorBuilder: (_, __) => SizedBox(width: 12.0),
+                        padding: EdgeInsets.symmetric(horizontal: 12.0),
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: trending.length,
+                        itemBuilder: (context, index) {
+                          final trend = trending[index];
+                          return TrendingNowTap(name: trend, selected: trend == "lbl_all".tr);
+                        }),
+                  ),
+                  SizedBox(height: 36),
+                  Container(
+                      height: getVerticalSize(290.00),
+                      width: Get.width,
+                      child: Obx(() => ListView.separated(
+                          separatorBuilder: (_, __) => SizedBox(width: 12.0),
+                          padding: EdgeInsets.symmetric(horizontal: 12.0),
+                          scrollDirection: Axis.horizontal,
+                          physics: BouncingScrollPhysics(),
+                          itemCount: controller.mainLandingModelObj.value.listproductItemList.length,
+                          itemBuilder: (context, index) {
+                            ListproductItemModel model =
+                                controller.mainLandingModelObj.value.listproductItemList[index];
+                            return ListProductItemWidget(model);
+                          }))),
+                  SizedBox(height: 36),
+                ]),
+            Text("msg_actual_categori".tr.toUpperCase(),
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: AppStyle.txtLatoRegular18.copyWith(letterSpacing: 1.08)),
             Padding(
                 padding: getPadding(left: 16, top: 36, right: 16),
                 child: CommonImageView(
@@ -566,8 +498,28 @@ class MainLandingScreen extends GetWidget<MainLandingController> {
   onTapImgImageMain() {
     Get.toNamed(AppRoutes.productDiscoverScreen);
   }
+}
 
-  onTapShopNowBtn() {
-    Get.toNamed(AppRoutes.productDiscoverScreen);
+class TrendingNowTap extends StatelessWidget {
+  const TrendingNowTap({super.key, required this.name, required this.selected});
+
+  final String name;
+  final bool selected;
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {},
+      borderRadius: BorderRadiusStyle.txtRoundedBorder8,
+      child: Ink(
+          padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+          decoration: selected
+              ? AppDecoration.txtFillIndigoA200.copyWith(borderRadius: BorderRadiusStyle.txtRoundedBorder8)
+              : AppDecoration.txtFillGray200.copyWith(borderRadius: BorderRadiusStyle.txtRoundedBorder8),
+          child: Text(name,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.left,
+              style: AppStyle.txtLatoRegular13WhiteA700
+                  .copyWith(letterSpacing: 0.39, color: selected ? null : Colors.black))),
+    );
   }
 }

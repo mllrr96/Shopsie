@@ -7,29 +7,26 @@ class SplashScreen extends GetWidget<SplashController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorConstant.whiteA700,
-      body: Container(
-        width: size.width,
-        child: SingleChildScrollView(
-          child: Container(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                    padding: getPadding(left: 101, top: 266, right: 101),
-                    child: Text("lbl_shopsie".tr,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.left,
-                        style: AppStyle.txtPlayfairDisplayRomanBold48.copyWith())),
-                Padding(
-                    padding: getPadding(left: 101, top: 60, right: 101, bottom: 20),
-                    child: Text("msg_the_best_way_to".tr,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.left,
-                        style: AppStyle.txtLatoRegular14Gray600.copyWith()))
-              ],
-            ),
+      body: SingleChildScrollView(
+        child: Container(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                  padding: getPadding(left: 101, top: 266, right: 101),
+                  child: Text("lbl_shopsie".tr,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.left,
+                      style: AppStyle.txtPlayfairDisplayRomanBold48.copyWith())),
+              Padding(
+                  padding: getPadding(left: 101, top: 60, right: 101, bottom: 20),
+                  child: Text("msg_the_best_way_to".tr,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.left,
+                      style: AppStyle.txtLatoRegular14Gray600.copyWith()))
+            ],
           ),
         ),
       ),
